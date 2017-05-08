@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     FingerprintManagerCompat fingerprintManager;
     KeyguardManager keyguardManager;
     FingerprintManagerCompat.AuthenticationCallback callback;
+    CancellationSignal cancellationSignal;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         fingerprintManager = FingerprintManagerCompat.from(this);
         keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
+        cancellationSignal = new CancellationSignal();
 
         callback = new FingerprintManagerCompat.AuthenticationCallback() {
             @Override
@@ -69,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        CancellationSignal cancellationSignal = new CancellationSignal();
+
         if (keyguardManager.isKeyguardSecure() && fingerprintManager.isHardwareDetected()) {
             Log.i("sysout", "ok");
             textView.setText("该设备支持指纹解锁");
